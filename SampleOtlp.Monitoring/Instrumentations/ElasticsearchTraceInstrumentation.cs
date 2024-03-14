@@ -1,26 +1,25 @@
 using OpenTelemetry.Trace;
 
-namespace SampleOtlp.Monitoring.Instrumentations
+namespace SampleOtlp.Monitoring;
+
+public class ElasticsearchTraceInstrumentation : ITraceInstrumentation
 {
-    public class ElasticsearchTraceInstrumentation : ITraceInstrumentation
+    private readonly OTLPOption _options;
+
+    public ElasticsearchTraceInstrumentation(
+        OTLPOption options)
     {
-        private readonly OTLPOption _options;
+        _options = options;
+    }
 
-        public ElasticsearchTraceInstrumentation(
-            OTLPOption options)
+    public TracerProviderBuilder AddInstrumentation(TracerProviderBuilder builder)
+    {
+        builder.AddElasticsearchClientInstrumentation(options =>
         {
-            _options = options;
-        }
-
-        public TracerProviderBuilder AddInstrumentation(TracerProviderBuilder builder)
-        {
-            builder.AddElasticsearchClientInstrumentation(options =>
-            {
-                options.ParseAndFormatRequest = true;
-                options.SuppressDownstreamInstrumentation = true;
-                options.SetDbStatementForRequest = false;
-            });
-            return builder;
-        }
+            options.ParseAndFormatRequest = true;
+            options.SuppressDownstreamInstrumentation = true;
+            options.SetDbStatementForRequest = false;
+        });
+        return builder;
     }
 }

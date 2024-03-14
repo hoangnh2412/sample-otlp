@@ -1,6 +1,6 @@
 using OpenTelemetry.Metrics;
 
-namespace SampleOtlp.Monitoring.Instrumentations;
+namespace SampleOtlp.Monitoring;
 
 public interface IMetricInstrumentation
 {
