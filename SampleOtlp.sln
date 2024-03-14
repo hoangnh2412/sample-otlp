@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleOtlp.NotifyService", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleOtlp.SyncService", "SampleOtlp.SyncService\SampleOtlp.SyncService.csproj", "{ADB8568F-7546-4890-A1E1-4A9A669D4CDE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleOtlp.SNS", "SampleOtlp.SNS\SampleOtlp.SNS.csproj", "{13B0AE50-917D-4BE7-88B1-53250C2A148A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{ADB8568F-7546-4890-A1E1-4A9A669D4CDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADB8568F-7546-4890-A1E1-4A9A669D4CDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADB8568F-7546-4890-A1E1-4A9A669D4CDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13B0AE50-917D-4BE7-88B1-53250C2A148A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13B0AE50-917D-4BE7-88B1-53250C2A148A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13B0AE50-917D-4BE7-88B1-53250C2A148A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13B0AE50-917D-4BE7-88B1-53250C2A148A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

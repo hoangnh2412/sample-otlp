@@ -11,7 +11,7 @@ public static class MonitoringExtension
         services.Configure<OTLPOption>(otlpSection);
         otlpSection.Bind(otlpOptions);
 
-        // OTLPType.TraceInstrumentations.Add(OTLPOption.InstrumentationType.Redis, typeof(RedisTraceInstrumentation).AssemblyQualifiedName);
+        OTLPType.TraceInstrumentations.Add(OTLPOption.InstrumentationType.Redis, typeof(RedisTraceInstrumentation).AssemblyQualifiedName);
         // OTLPType.TraceInstrumentations.Add(OTLPOption.InstrumentationType.Elasticsearch, typeof(ElasticsearchTraceInstrumentation).AssemblyQualifiedName);
 
         OTLPType.TraceExporters.Add(OTLPOption.ExporterType.Uptrace, typeof(UptraceTraceExporter).AssemblyQualifiedName);

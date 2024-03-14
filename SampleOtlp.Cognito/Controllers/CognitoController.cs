@@ -1,3 +1,4 @@
+using Infrastructure.Caching;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SampleOtlp.Cognito.Controllers;
@@ -7,8 +8,11 @@ namespace SampleOtlp.Cognito.Controllers;
 public class CognitoController : ControllerBase
 {
     [HttpGet("user/{id}")]
-    public IActionResult Get([FromRoute] Guid id)
+    public async Task<IActionResult> GetAsync(
+        [FromRoute] Guid id,
+        [FromServices] ICacheService cacheService)
     {
+        await cacheService.GetAsync("cognito");
         return Ok(new
         {
             Id = Guid.Parse("00337ebb-9bee-478f-aa90-8917af561765"),

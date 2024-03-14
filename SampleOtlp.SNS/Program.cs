@@ -1,24 +1,11 @@
-using Infrastructure.Caching;
-using Infrastructure.Caching.Redis;
-using SampleOtlp.Cognito;
-using SampleOtlp.Monitoring;
-
 var builder = WebApplication.CreateBuilder(args);
 
-// Monitoring
-var otlpOptions = builder.Services.BuildOptionMonitor(builder.Configuration);
-builder.Services
-    .AddCoreMonitor(otlpOptions)
-    .AddCoreTrace(otlpOptions)
-    .AddCoreMetric(otlpOptions)
-    .AddCoreLogging(otlpOptions);
+// Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddSingleton<ICacheService, RedisCacheService>();
 
 var app = builder.Build();
 
