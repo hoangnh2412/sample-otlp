@@ -5,30 +5,12 @@ using OpenTelemetry.Metrics;
 using System.Diagnostics.Metrics;
 using OpenTelemetry.Logs;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace SampleOtlp.Monitoring;
 
 public static class MonitoringExtension
 {
-    // public static OTLPOption BuildOptionMonitor(this IServiceCollection services, IConfiguration configuration)
-    // {
-    //     var otlpOptions = new OTLPOption();
-    //     var otlpSection = configuration.GetSection("OTLP");
-    //     services.Configure<OTLPOption>(otlpSection);
-    //     otlpSection.Bind(otlpOptions);
-
-    //     OTLPType.TraceInstrumentations.Add(OTLPOption.InstrumentationType.Redis, typeof(RedisTraceInstrumentation).AssemblyQualifiedName);
-    //     OTLPType.TraceInstrumentations.Add(OTLPOption.InstrumentationType.Elasticsearch, typeof(ElasticsearchTraceInstrumentation).AssemblyQualifiedName);
-
-    //     OTLPType.TraceExporters.Add(OTLPOption.ExporterType.Uptrace, typeof(UptraceTraceExporter).AssemblyQualifiedName);
-    //     OTLPType.MetricExporters.Add(OTLPOption.ExporterType.Uptrace, typeof(UptraceMetricExporter).AssemblyQualifiedName);
-    //     OTLPType.LoggingExporters.Add(OTLPOption.ExporterType.Uptrace, typeof(UptraceLogExporter).AssemblyQualifiedName);
-
-    //     return otlpOptions;
-    // }
-
     public static IServiceCollection AddCoreMonitor(this IServiceCollection services, OTLPOption otlpOptions)
     {
         services
@@ -164,15 +146,9 @@ public static class MonitoringExtension
                 // Exporters
                 options.AddConsoleExporter();
                 if (otlpOptions.Logging.Exporter == default(OTLPOption.ExporterType) || !OTLPType.LoggingExporters.TryGetValue(otlpOptions.Logging.Exporter, out string exporterTypeName))
-                {
                     options.AddConsoleExporter();
-                }
                 else
-                {
-                    var exporterType = Type.GetType(exporterTypeName);
-                    var exporterInstance = Activator.CreateInstance(exporterType, otlpOptions) as ILoggingExporter;
-                    exporterInstance.AddExporter(options);
-                }
+                    (Activator.CreateInstance(Type.GetType(exporterTypeName), otlpOptions) as ILoggingExporter).AddExporter(options);
             });
         });
 
@@ -181,12 +157,16 @@ public static class MonitoringExtension
 
     private static ResourceBuilder BuildResource(OTLPOption otlpOptions)
     {
+        var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+        if (string.IsNullOrEmpty(env))
+            env = "Development";
+
         return ResourceBuilder
             .CreateDefault()
             .AddEnvironmentVariableDetector()
             .AddTelemetrySdk()
             .AddAttributes(new List<KeyValuePair<string, object>> {
-                new KeyValuePair<string, object>("deployment.environment", Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"))
+                new KeyValuePair<string, object>("deployment.environment", env)
             })
             .AddService(
                 serviceName: string.IsNullOrEmpty(otlpOptions.ServiceName) ? Assembly.GetEntryAssembly().GetName().Name : otlpOptions.ServiceName,

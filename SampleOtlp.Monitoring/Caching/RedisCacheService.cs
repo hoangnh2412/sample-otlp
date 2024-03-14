@@ -61,7 +61,7 @@ namespace Infrastructure.Caching.Redis
             token.ThrowIfCancellationRequested();
 
             // if (!key.StartsWith(_options.InstanceName))
-            //     key = $"{_options.InstanceName}{key}";
+            //     key = $"{_options.InstanceName}:{key}";
 
             await ConnectAsync();
         }
@@ -74,7 +74,7 @@ namespace Infrastructure.Caching.Redis
             token.ThrowIfCancellationRequested();
 
             if (!key.StartsWith(_options.InstanceName))
-                key = $"{_options.InstanceName}{key}";
+                key = $"{_options.InstanceName}:{key}";
 
             await ConnectAsync();
 
@@ -90,7 +90,7 @@ namespace Infrastructure.Caching.Redis
             token.ThrowIfCancellationRequested();
 
             if (!key.StartsWith(_options.InstanceName))
-                key = $"{_options.InstanceName}{key}";
+                key = $"{_options.InstanceName}:{key}";
 
             await ConnectAsync();
 
@@ -109,7 +109,7 @@ namespace Infrastructure.Caching.Redis
             token.ThrowIfCancellationRequested();
 
             if (!key.StartsWith(_options.InstanceName))
-                key = $"{_options.InstanceName}{key}";
+                key = $"{_options.InstanceName}:{key}";
 
             await ConnectAsync();
 
@@ -125,7 +125,7 @@ namespace Infrastructure.Caching.Redis
             token.ThrowIfCancellationRequested();
 
             if (!key.StartsWith(_options.InstanceName))
-                key = $"{_options.InstanceName}{key}";
+                key = $"{_options.InstanceName}:{key}";
 
             await ConnectAsync();
 
@@ -148,7 +148,7 @@ namespace Infrastructure.Caching.Redis
             token.ThrowIfCancellationRequested();
 
             if (!key.StartsWith(_options.InstanceName))
-                key = $"{_options.InstanceName}{key}";
+                key = $"{_options.InstanceName}:{key}";
 
             await ConnectAsync();
 
@@ -171,7 +171,7 @@ namespace Infrastructure.Caching.Redis
             token.ThrowIfCancellationRequested();
 
             if (!key.StartsWith(_options.InstanceName))
-                key = $"{_options.InstanceName}{key}";
+                key = $"{_options.InstanceName}:{key}";
 
             await ConnectAsync();
 
@@ -190,7 +190,7 @@ namespace Infrastructure.Caching.Redis
             token.ThrowIfCancellationRequested();
 
             if (!key.StartsWith(_options.InstanceName))
-                key = $"{_options.InstanceName}{key}";
+                key = $"{_options.InstanceName}:{key}";
 
             await ConnectAsync();
 
@@ -208,7 +208,7 @@ namespace Infrastructure.Caching.Redis
             token.ThrowIfCancellationRequested();
 
             if (!key.StartsWith(_options.InstanceName))
-                key = $"{_options.InstanceName}{key}";
+                key = $"{_options.InstanceName}:{key}";
 
             await ConnectAsync();
 
@@ -226,7 +226,7 @@ namespace Infrastructure.Caching.Redis
             token.ThrowIfCancellationRequested();
 
             if (!key.StartsWith(_options.InstanceName))
-                key = $"{_options.InstanceName}{key}";
+                key = $"{_options.InstanceName}:{key}";
 
             await ConnectAsync();
 
@@ -244,7 +244,7 @@ namespace Infrastructure.Caching.Redis
             token.ThrowIfCancellationRequested();
 
             if (!key.StartsWith(_options.InstanceName))
-                key = $"{_options.InstanceName}{key}";
+                key = $"{_options.InstanceName}:{key}";
 
             await ConnectAsync();
 
@@ -259,7 +259,7 @@ namespace Infrastructure.Caching.Redis
             token.ThrowIfCancellationRequested();
 
             if (!key.StartsWith(_options.InstanceName))
-                key = $"{_options.InstanceName}{key}";
+                key = $"{_options.InstanceName}:{key}";
 
             await ConnectAsync();
 
@@ -274,7 +274,7 @@ namespace Infrastructure.Caching.Redis
             token.ThrowIfCancellationRequested();
 
             if (!key.StartsWith(_options.InstanceName))
-                key = $"{_options.InstanceName}{key}";
+                key = $"{_options.InstanceName}:{key}";
 
             await ConnectAsync();
 
@@ -289,7 +289,7 @@ namespace Infrastructure.Caching.Redis
             token.ThrowIfCancellationRequested();
 
             if (!key.StartsWith(_options.InstanceName))
-                key = $"{_options.InstanceName}{key}";
+                key = $"{_options.InstanceName}:{key}";
 
             await ConnectAsync();
 
@@ -304,7 +304,7 @@ namespace Infrastructure.Caching.Redis
             token.ThrowIfCancellationRequested();
 
             if (!key.StartsWith(_options.InstanceName))
-                key = $"{_options.InstanceName}{key}";
+                key = $"{_options.InstanceName}:{key}";
 
             await ConnectAsync();
 
@@ -378,7 +378,7 @@ namespace Infrastructure.Caching.Redis
         public async Task<byte[]> GetAsync(string key, CancellationToken token = default)
         {
             if (!key.StartsWith(_options.InstanceName))
-                key = $"{_options.InstanceName}{key}";
+                key = $"{_options.InstanceName}:{key}";
 
             await ConnectAsync();
 
@@ -397,7 +397,7 @@ namespace Infrastructure.Caching.Redis
         public async Task SetAsync(string key, byte[] value, DistributedCacheEntryOptions options, CancellationToken token = default)
         {
             if (!key.StartsWith(_options.InstanceName))
-                key = $"{_options.InstanceName}{key}";
+                key = $"{_options.InstanceName}:{key}";
 
             await ConnectAsync();
 
@@ -422,7 +422,7 @@ namespace Infrastructure.Caching.Redis
         public async Task RemoveAsync(string key, CancellationToken token = default)
         {
             if (!key.StartsWith(_options.InstanceName))
-                key = $"{_options.InstanceName}{key}";
+                key = $"{_options.InstanceName}:{key}";
 
             await ConnectAsync();
 

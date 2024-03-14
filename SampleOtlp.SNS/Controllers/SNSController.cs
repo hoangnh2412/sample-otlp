@@ -1,11 +1,22 @@
-// using System;
-// using System.Collections.Generic;
-// using System.Linq;
-// using System.Threading.Tasks;
+using System.Text;
+using Infrastructure.Caching;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
-// namespace SampleOtlp.SNS.Controllers;
+namespace SampleOtlp.SNS.Controllers;
 
-// public class SNSController : ControllerBase
-// {
-
-// }
+[Route("sns")]
+[ApiController]
+public class SNSController : ControllerBase
+{
+    [HttpPost]
+    public async Task<IActionResult> PostAsync(
+        [FromBody] UserModel input,
+        [FromServices] ICacheService cacheService)
+    {
+        input.Id = Guid.NewGuid();
+        input.CreatedAt = DateTime.Now;
+        await cacheService.SetAsync($"sns:{input.Id}", Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(input)), null);
+        return Ok(input);
+    }
+}

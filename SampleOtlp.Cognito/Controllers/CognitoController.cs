@@ -1,5 +1,7 @@
+using System.Text;
 using Infrastructure.Caching;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace SampleOtlp.Cognito.Controllers;
 
@@ -7,23 +9,43 @@ namespace SampleOtlp.Cognito.Controllers;
 [ApiController]
 public class CognitoController : ControllerBase
 {
+    private readonly ILogger<CognitoController> _logger;
+
+    public CognitoController(ILogger<CognitoController> logger)
+    {
+        _logger = logger;
+    }
+
     [HttpGet("user/{id}")]
     public async Task<IActionResult> GetAsync(
         [FromRoute] Guid id,
         [FromServices] ICacheService cacheService)
     {
-        await cacheService.GetAsync("cognito");
-        return Ok(new
+        try
         {
-            Id = Guid.Parse("00337ebb-9bee-478f-aa90-8917af561765"),
-            FirstName = "Hoang",
-            LastName = "Nguyen"
-        });
+            await cacheService.GetAsync("cognito");
+            return Ok(new
+            {
+                Id = Guid.Parse("00337ebb-9bee-478f-aa90-8917af561765"),
+                FirstName = "Hoang",
+                LastName = "Nguyen"
+            });
+        }
+        catch (System.Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+            return StatusCode(500, ex.Message);
+        }
     }
 
     [HttpPost("user")]
-    public IActionResult Post([FromBody] UserModel input)
+    public async Task<IActionResult> PostAsync(
+        [FromBody] UserModel input,
+        [FromServices] ICacheService cacheService)
     {
-        return Ok();
+        input.Id = Guid.NewGuid();
+        input.CreatedAt = DateTime.Now;
+        await cacheService.SetAsync($"cognito:{input.Id}", Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(input)), null);
+        return Ok(input);
     }
 }

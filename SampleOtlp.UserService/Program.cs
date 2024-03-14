@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SampleOtlp.Monitoring;
+using SampleOtlp.Monitoring.Queue;
 using SampleOtlp.Monitoring.Storage;
 using SampleOtlp.UserService;
 
@@ -20,6 +21,8 @@ builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("UserDbContext");
 builder.Services.AddDbContext<UserDbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+builder.Services.AddSingleton<MessageSender>();
 
 var app = builder.Build();
 

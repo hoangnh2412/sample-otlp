@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace SampleOtlp.Cognito;
+namespace SampleOtlp.SNS;
 public class UserModel
 {
     public Guid Id { get; set; }

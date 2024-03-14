@@ -18,6 +18,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.InstanceName = "TestOTEL";
+    options.ConfigurationOptions = new StackExchange.Redis.ConfigurationOptions();
+    options.ConfigurationOptions.EndPoints.Add("localhost:6379");
+});
 builder.Services.AddSingleton<ICacheService, RedisCacheService>();
 
 var app = builder.Build();
