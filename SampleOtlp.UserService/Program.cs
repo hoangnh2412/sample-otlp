@@ -38,5 +38,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+// app.MapPrometheusScrapingEndpoint();
 
 app.Run();

@@ -1,22 +1,22 @@
-using Microsoft.Extensions.Options;
-using OpenTelemetry.Metrics;
-using Uptrace.OpenTelemetry;
+// using Microsoft.Extensions.Options;
+// using OpenTelemetry.Metrics;
+// using Uptrace.OpenTelemetry;
 
-namespace SampleOtlp.Monitoring;
+// namespace SampleOtlp.Monitoring;
 
-public class UptraceMetricExporter : IMetricExporter
-{
-    private readonly OTLPOption _options;
+// public class UptraceMetricExporter : IMetricExporter
+// {
+//     private readonly OTLPOption _options;
 
-    public UptraceMetricExporter(
-        OTLPOption options)
-    {
-        _options = options;
-    }
+//     public UptraceMetricExporter(
+//         OTLPOption options)
+//     {
+//         _options = options;
+//     }
 
-    public MeterProviderBuilder AddExporter(MeterProviderBuilder builder)
-    {
-        builder.AddUptrace(_options.Metric.Endpoint);
-        return builder;
-    }
-}
+//     public MeterProviderBuilder AddExporter(MeterProviderBuilder builder)
+//     {
+//         builder.AddUptrace(_options.Metric.Endpoint);
+//         return builder;
+//     }
+// }

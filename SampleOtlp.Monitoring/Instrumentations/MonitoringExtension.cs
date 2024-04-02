@@ -49,13 +49,63 @@ public static class MonitoringExtension
                     .AddAspNetCoreInstrumentation(options =>
                     {
                         options.RecordException = true;
+
+                        options.EnrichWithHttpRequest = (activity, request) =>
+                        {
+                            activity.SetTag("app.identity.userId", Guid.NewGuid());
+                            activity.SetTag("app.identity.username", "hoangnh");
+                        };
+
+                        options.EnrichWithHttpResponse = (activity, response) =>
+                        {
+                            activity.SetTag("app.identity.userId", Guid.NewGuid());
+                            activity.SetTag("app.identity.username", "hoangnh");
+                        };
+
+                        options.EnrichWithException = (activity, exception) =>
+                        {
+                            activity.SetTag("app.identity.userId", Guid.NewGuid());
+                            activity.SetTag("app.identity.username", "hoangnh");
+                        };
                     })
                     .AddHttpClientInstrumentation(options =>
                     {
                         options.RecordException = true;
+
+                        options.EnrichWithHttpRequestMessage = (activity, request) =>
+                        {
+                            activity.SetTag("app.identity.userId", Guid.NewGuid());
+                            activity.SetTag("app.identity.username", "hoangnh");
+                        };
+
+                        options.EnrichWithHttpResponseMessage = (activity, response) =>
+                        {
+                            activity.SetTag("app.identity.userId", Guid.NewGuid());
+                            activity.SetTag("app.identity.username", "hoangnh");
+                        };
+
+                        options.EnrichWithException = (activity, exception) =>
+                        {
+                            activity.SetTag("app.identity.userId", Guid.NewGuid());
+                            activity.SetTag("app.identity.username", "hoangnh");
+                        };
                     })
-                    .AddEntityFrameworkCoreInstrumentation()
-                    .AddSqlClientInstrumentation();
+                    .AddEntityFrameworkCoreInstrumentation(options =>
+                    {
+                        options.SetDbStatementForText = true;
+
+                        // options.EnrichWithIDbCommand = (activity, command) =>
+                        // {
+                        //     command.
+                        // };
+                    })
+                    .AddSqlClientInstrumentation(options =>
+                    {
+                        options.RecordException = true;
+                        options.SetDbStatementForText = true;
+
+                        // options.Enrich = (activity, )
+                    });
 
                 // Intstrumentations
                 foreach (var item in OTLPType.TraceInstrumentations)
@@ -84,15 +134,15 @@ public static class MonitoringExtension
             .AddOpenTelemetry()
             .WithMetrics(configure =>
             {
-                configure.AddMeter(Assembly.GetEntryAssembly().GetName().Name);
                 if (meters != null && meters.Length > 0)
                     configure.AddMeter(meters);
 
                 configure
                     .SetResourceBuilder(BuildResource(otlpOptions))
-                    .AddRuntimeInstrumentation()
+                    .AddAspNetCoreInstrumentation()
                     .AddHttpClientInstrumentation()
-                    .AddAspNetCoreInstrumentation();
+                    .AddRuntimeInstrumentation()
+                    .AddProcessInstrumentation();
 
                 switch (otlpOptions.HistogramAggregation)
                 {
@@ -144,7 +194,7 @@ public static class MonitoringExtension
                 options.SetResourceBuilder(BuildResource(otlpOptions));
 
                 // Exporters
-                options.AddConsoleExporter();
+                // options.AddConsoleExporter();
                 if (otlpOptions.Logging.Exporter == default(OTLPOption.ExporterType) || !OTLPType.LoggingExporters.TryGetValue(otlpOptions.Logging.Exporter, out string exporterTypeName))
                     options.AddConsoleExporter();
                 else
