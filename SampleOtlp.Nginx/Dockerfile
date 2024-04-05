@@ -1,3 +1,5 @@
+# https://www.nginx.com/blog/nginx-tutorial-opentelemetry-tracing-understand-microservices/
+
 FROM nginx:1.23.1
 RUN apt-get update ; apt-get install unzip
 ADD https://github.com/open-telemetry/opentelemetry-cpp-contrib/releases/download/webserver%2Fv1.0.3/opentelemetry-webserver-sdk-x64-linux.tgz /opt
