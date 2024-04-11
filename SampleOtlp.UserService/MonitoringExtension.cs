@@ -14,9 +14,9 @@ public static class MonitoringExtension
         // OTLPType.TraceInstrumentations.Add(OTLPOption.InstrumentationType.Redis, typeof(RedisTraceInstrumentation).AssemblyQualifiedName);
         // OTLPType.TraceInstrumentations.Add(OTLPOption.InstrumentationType.Elasticsearch, typeof(ElasticsearchTraceInstrumentation).AssemblyQualifiedName);
 
-        OTLPType.TraceExporters.Add(OTLPOption.ExporterType.OTLP, typeof(OTLPTraceExporter).AssemblyQualifiedName);
-        OTLPType.MetricExporters.Add(OTLPOption.ExporterType.OTLP, typeof(OTLPMetricExporter).AssemblyQualifiedName);
-        OTLPType.LoggingExporters.Add(OTLPOption.ExporterType.OTLP, typeof(OTLPLogExporter).AssemblyQualifiedName);
+        OTLPType.TraceExporters.Add(OTLPOption.ExporterType.OTLP, typeof(UptraceTraceExporter).AssemblyQualifiedName);
+        OTLPType.MetricExporters.Add(OTLPOption.ExporterType.OTLP, typeof(UptraceMetricExporter).AssemblyQualifiedName);
+        OTLPType.LoggingExporters.Add(OTLPOption.ExporterType.OTLP, typeof(UptraceLogExporter).AssemblyQualifiedName);
 
         return otlpOptions;
     }
