@@ -23,8 +23,12 @@ public class UserController : ControllerBase
     {
         try
         {
-            var users = await dbContext.Users.OrderByDescending(x => x.CreatedAt).Take(20).ToListAsync();
-            return Ok(users);
+            using (_logger.BeginScope("{log.record.uid}", $"hehehe {Guid.NewGuid()}"))
+            {
+                var users = await dbContext.Users.OrderByDescending(x => x.CreatedAt).Take(20).ToListAsync();
+                _logger.LogDebug("test", users[0].Id);
+                return Ok(users);
+            }
         }
         catch (System.Exception ex)
         {

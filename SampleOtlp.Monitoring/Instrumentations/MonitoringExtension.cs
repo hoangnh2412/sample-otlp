@@ -6,6 +6,7 @@ using System.Diagnostics.Metrics;
 using OpenTelemetry.Logs;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using OpenTelemetry;
 
 namespace SampleOtlp.Monitoring;
 
@@ -210,7 +211,7 @@ public static class MonitoringExtension
             builder.ClearProviders();
             builder.Configure(options =>
             {
-                options.ActivityTrackingOptions = ActivityTrackingOptions.TraceId | ActivityTrackingOptions.SpanId;
+                options.ActivityTrackingOptions = ActivityTrackingOptions.TraceId | ActivityTrackingOptions.SpanId | ActivityTrackingOptions.ParentId | ActivityTrackingOptions.TraceState | ActivityTrackingOptions.TraceFlags | ActivityTrackingOptions.Tags | ActivityTrackingOptions.Baggage;
             });
 
             builder.AddOpenTelemetry(options =>
